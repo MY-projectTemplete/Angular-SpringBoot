@@ -1,0 +1,380 @@
+project:
+
+Create React Project:
+=====================
+
+>> npx Create-React-app userpanel
+
+>> npm install web-vitals
+
+>> npm install react-router-dom
+
+>>npm i react-redux
+
+>>npm i react-stores
+
+>>yarn add react-router-dom react-redux @reactjs/toolkit axios react-toastify
+
+>>https://sunbeam-kdac-aug24@github.com/sunbeam-kdac-aug24/ms.net.git
+
+>>ildasm "D:\C DAC\SunbeamData\ms.net\Day02\KDAC_AUG_24\00DemoBasics\bin\Debug\00DemoBasics.exe"
+
+>> npm i react-toastify //use for notification like alert
+
+
+Create Angular Project:
+=======================
+Steps:
+======
+# Install Nodejs if already install check version using "node -v" and check npm package using "npm -v"
+# install Angular CLI :search on google and do command in cmd 
+>>npm install -g @angular/cli
+
+>>ng version
+
+>>ng help 
+
+# create new project in angular
+>> ng new <project Name>
+eg. 
+>> ng new examportal
+
+>>ng serve (it build the project and start project on local server)
+
+# Install Angular Material UI
+>>ng add @angular/material
+==> Api import in app.component.ts file
+ 
+eg=> we import {MatButtonModule} from '@angular/material/button'; it :
+
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import {MatButtonModule} from '@angular/material/button';
+@Component({
+  selector: 'app-root',
+  imports: [RouterOutlet, MatButtonModule],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
+})
+export class AppComponent {
+  title = 'frontend-exam-portal';
+}
+
+
+#BootStrap use in Angular
+>>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+
+=>copy and paste these links in Index.html file in the <head></head> tag
+
+#Another Way to use BootStrap
+=>Step 1: Install Bootstrap
+Open your terminal in the project root and run:
+>> npm install bootstrap
+
+=>Step 2: Add Bootstrap CSS to angular.json
+In your angular.json, look for the "styles" array and add the Bootstrap path:
+>>
+"styles": [
+  "node_modules/bootstrap/dist/css/bootstrap.min.css",
+  "src/styles.css"
+]
+
+Make sure it's inside the "build" section under "architect" → "options"
+
+=>Step 3: Use Bootstrap Classes in HTML
+Now you can use Bootstrap classes directly in your component HTML. For example, update your app.component.html like this:
+>>
+<div class="container text-center mt-5">
+  <h1 class="text-primary">{{ title }}</h1>
+  <button class="btn btn-success">Bootstrap Button</button>
+</div>
+
+=>Step 4: (Optional) Add Bootstrap JS (for modals, dropdowns)
+If you want to use Bootstrap JS components (like modals, dropdowns), also add this in angular.json under "scripts":
+>>"scripts": [
+  "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+]
+
+
+## in React we create Component,Screen ,Services folder here also we create Component,Screen ,Services
+
+#Create component
+>>cd src\app 
+
+>>mkdir Components
+
+>>mkdir Pages/Screen
+
+>>cd Components // in the Component we use Reusable Components 
+
+>>ng g c navbar
+                 here g: generate
+                      c: Component
+                      //we also give Command this like >> ng generate component navbar
+>>ng g c footer
+
+>>cd ..
+>>cd Pages/Screen  // in the Screen we create web Pages that show on Browser
+>>ng g c signup
+>>ng g c login
+
+>>cd src\app 
+
+>>mkdir services  //using services call to backend
+>> ng g s user
+                 here g: generate
+                      s: Service
+
+# How to Route(Show) signup form on Browser 
+===========================================
+# Step 1: Check signup.component.ts
+Make sure SignupComponent is declared as a standalone component, like this:
+============================================================================
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-signup',
+  standalone: true,
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.css']
+})
+export class SignupComponent { }
+// If standalone: true is missing, add it.
+========
+#Step 2: Update app.routes.ts
+Your file currently looks like this:
+=========================================
+import { Routes } from '@angular/router';
+import { SignupComponent } from './Screens/signup/signup.component';
+
+export const routes: Routes = [
+  { path: 'signup', component: SignupComponent }
+];
+===========================
+You can add more routes like login later in the same array.
+===========================================================
+import { Routes } from '@angular/router';
+import { SignupComponent } from './Screens/signup/signup.component';
+import { LoginComponent } from './Screens/login/login.component';
+
+export const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },  // default route
+  { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent }
+];
+
+========
+# Step 3: Set Up <router-outlet> in app.component.html
+Open app.component.html and make sure it includes:
+=======================================================
+<router-outlet></router-outlet>
+
+This is the placeholder where routed components like SignupComponent will be rendered.
+===========
+
+# Create Assets folder here we put img file
+change in angular json file
+>>
+"assets": [
+  "src/assets",
+  "src/favicon.ico"
+]
+
+# import { FormsModule } from '@angular/forms';
+this required for call the function for save the form data
+>> signup.component.html
+
+<form (ngSubmit)="formSubmit()">
+            <div class="container">
+                <!-- User Name -->
+            <mat-form-field class="full-width" appearance="outline">
+                <mat-label>User Name</mat-label>
+                <input  matInput placeholder="Enter Here" [(ngModel)]="user.userName" name="userName">
+            </mat-form-field>
+</form>
+signup.component.ts
+import { Component, OnInit } from '@angular/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-signup',
+  imports: [    
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    FormsModule
+  ],
+  templateUrl: './signup.component.html',
+  styleUrl: './signup.component.css'
+})
+export class SignupComponent {
+
+  public user={
+    userName:"",
+    firstName:"",
+    lastName:"",
+    password:"",
+    email:"",
+    phone:""
+  }
+
+  formSubmit(){
+    alert("form Submited");
+  }
+
+}
+
+
+>>cd src\app 
+
+>>mkdir services  //using services call to backend
+>> ng g s user
+                 here g: generate
+                      s: Service
+
+
+
+# HttpClientModule import for Backend  request 
+>>app.config.ts
+import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
+import { provideRouter } from '@angular/router';
+
+import { routes } from './app.routes';
+import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes),
+    provideClientHydration(withEventReplay()),
+    importProvidersFrom(HttpClientModule), // ✅ Required for HttpClient
+    
+  ]
+};
+
+# user.service.ts file like import HttpClient
+
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import baseUrl from './helper';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UserService {
+
+  constructor(private http:HttpClient) {  }
+
+  public addUser(user:any){
+    return this.http.post(`${baseUrl}/user/`,user)
+  }
+}
+
+
+# signup.component.ts
+import { UserService } from '../../services/user.service';
+
+export class SignupComponent {
+
+  constructor(private userService: UserService) {}  // Inject service
+}
+
+# for Validation and popup
+  
+Option 1: Use Angular Material Snackbar (official & clean)
+Since you’re already using Angular Material, this is the best and easiest way:
+
+1. Import MatSnackBarModule
+In app.config.ts (or your module if you're not fully standalone yet):
+>>
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { importProvidersFrom } from '@angular/core';
+
+export const appConfig = {
+  providers: [
+    importProvidersFrom(MatSnackBarModule)
+  ]
+};
+ 
+2. Inject MatSnackBar in your component:
+>>
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+constructor(private snackBar: MatSnackBar) {}
+
+formSubmit() {
+  this.snackBar.open('Form submitted successfully!', 'Close', {
+    duration: 3000
+  });
+}
+
+########>> npm i sweetalert2
+#import in component >>import Swal from 'sweetalert2'
+and use >> 
+Swal.fire('title','msg','success');
+Swal.fire({
+  title: 'Error!',
+  text: 'Do you want to continue',
+  icon: 'error',
+  confirmButtonText: 'Cool'
+})
+eg.>>Swal.fire('success','Registerd Successfully ','success')
+
+
+#Option 2: Use a 3rd-party toast library like ngx-toastr
+If you want fancier toasts like react-toastify, you can install:
+
+>>npm install ngx-toastr --save
+>>npm install @angular/animations --save
+>>npm install @angular/animations@19.2.6 --save
+
+# In app.config.ts:
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+
+export const appConfig = {
+  providers: [
+    importProvidersFrom(BrowserAnimationsModule, ToastrModule.forRoot())
+  ]
+};
+# In your component:
+import { ToastrService } from 'ngx-toastr';
+
+constructor(private toastr: ToastrService) {}
+
+formSubmit() {
+  this.toastr.success('Registered successfully!', 'Success');
+}
+
+
+
+
+#>import {MatCardModule} from '@angular/material/card'; //use for show the login form as card 
+>>
+<mat-card appearance="outlined">
+  <mat-card-content>Simple card</mat-card-content>
+	//login form
+</mat-card>
+
+navigate the pages inside the app
+===================================
+<a href="/signup">Register here</a>  
+//it refresh the page so it not the quality of single page application 
+
+<a routerLink="/signup">Register here</a> #>>this not refresh the page it used another way
+
+<a [routerLink]="'/signup'">Register here</a> 
+without '' ke yah ise  as a variable consider krta h isliye dono jauri h lgana 
+
+
+
+
+
+
